@@ -13,7 +13,7 @@ import com.ilp.entity.Services;
 public class CustomerAccountConfiguration {
 
 	public static Customer createCustomer(ArrayList<Product> productList) {
-		// TODO Auto-generated method stub
+
 		Scanner scanner = new Scanner(System.in);
 		ArrayList<Account> accountList = new ArrayList<Account>();
 
@@ -48,7 +48,6 @@ public class CustomerAccountConfiguration {
 	}
 
 	public static void displayCustomer(Customer customer) {
-		// TODO Auto-generated method stub
 		System.out.println("*********Customer Acct Details*********************************************");
 		System.out.println("Customer ID:            CustomerName:           AccountType:       Balance:");
 		System.out.println("***************************************************************************");
@@ -66,11 +65,11 @@ public class CustomerAccountConfiguration {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter Account Number:");
 		String accountNumber = scanner.next();
-		int i = 1;
+		int index = 1;
 		System.out.println("Choose the Product to be added");
 		for (Product products : productList) {
-			System.out.println(i + ". " + products.getProductName());
-			i++;
+			System.out.println(index + ". " + products.getProductName());
+			index++;
 		}
 		int productChoice = scanner.nextInt();
 		Product product = productList.get(productChoice - 1);
@@ -98,17 +97,17 @@ public class CustomerAccountConfiguration {
 		Scanner scanner = new Scanner(System.in);
 		char goBackToTransactMenu;
 		do {
-			int i = 0;
+			int index = 0;
 			for (Account account : customer.getAccountList()) {
-				System.out.println((i + 1) + "." + account.getProduct().getProductName());
-				i++;
+				System.out.println((index + 1) + "." + account.getProduct().getProductName());
+				index++;
 			}
 			System.out.println("Enter Your Choice: ");
 			int accountChoice = scanner.nextInt();
-			i = 0;
+			index = 0;
 			for (Services service : customer.getAccountList().get(accountChoice - 1).getProduct().getServiceList()) {
-				System.out.println((i + 1) + "." + service.getServiceName() + "   " + service.getServiceRate());
-				i++;
+				System.out.println((index + 1) + "." + service.getServiceName() + "   " + service.getServiceRate());
+				index++;
 			}
 			int serviceChoice = scanner.nextInt();
 			System.out.println("Enter Number of Transaction: ");
@@ -140,21 +139,14 @@ public class CustomerAccountConfiguration {
 				int accountChoice = scanner.nextInt();
 				if (!(customer.getAccountList().get(accountChoice - 1).getProduct() instanceof LoanAccount)) {
 					do {
-						i = 1;
-						for (Services service : customer.getAccountList().get(accountChoice - 1).getProduct()
-								.getServiceList()) {
-							System.out.println(i + "." + service.getServiceName());
-							i++;
-						}
-						System.out.println("Enter Your Choice: (Please type in the chosen service)");
-						String manageAccountChoice = scanner.next();
-						if (manageAccountChoice.compareToIgnoreCase("cashdeposit") == 0
-								|| manageAccountChoice.compareToIgnoreCase("chequedeposit") == 0) {
+						System.out.println("1.Deposit 2.Withdraw 3.Balance");
+						System.out.println("Enter Your Choice: ");
+						int manageAccountChoice = scanner.nextInt();
+						if (manageAccountChoice == 1){
 							depositMoney(customer.getAccountList().get(accountChoice - 1));
-						} else if (manageAccountChoice.compareToIgnoreCase("atmwithdrawal") == 0) {
+						} else if (manageAccountChoice == 2) {
 							withdrawMoney(customer.getAccountList().get(accountChoice - 1));
-						} else if (manageAccountChoice.compareToIgnoreCase("onlinebanking") == 0
-								|| manageAccountChoice.compareToIgnoreCase("mobilebanking") == 0) {
+						} else if (manageAccountChoice == 3) {
 							displayCustomer(customer);
 						}
 						System.out.println("Do you want to go back to function choosing menu?");
@@ -166,11 +158,11 @@ public class CustomerAccountConfiguration {
 						i = 1;
 						System.out.println("1.Deposit");
 						System.out.println("2.Balance");
-						System.out.println("Enter Your Choice:(Please type in the chosen service)");
-						String manageAccountChoice = scanner.next();
-						if (manageAccountChoice.compareToIgnoreCase("deposit") == 0) {
+						System.out.println("Enter Your Choice:");
+						int manageAccountChoice = scanner.nextInt();
+						if (manageAccountChoice == 1) {
 							depositMoney(customer.getAccountList().get(accountChoice - 1));
-						} else if (manageAccountChoice.compareToIgnoreCase("balance") == 0) {
+						} else if (manageAccountChoice == 2) {
 							displayCustomer(customer);
 						}
 						System.out.println("Do you want to go back to function choosing menu?");
@@ -195,22 +187,18 @@ public class CustomerAccountConfiguration {
 			double depositAmt = scanner.nextDouble();
 			account.setAccountBalance(depositAmt + account.getAccountBalance());
 		} else {
-//			LoanAccount loanAcct = null;
 			loanAccount = (LoanAccount) account.getProduct();
 			System.out.println("Choose type of deposit: ");
-			int i = 0;
-			for (Services services : loanAccount.getServiceList()) {
-				System.out.println((i + 1) + "." + services.getServiceName());
-				i++;
-			}
+			System.out.println("1.Cash Deposit");
+			System.out.println("2.Cheque Deposit");
 
-			String depositChoice = scanner.next();
+			int depositChoice = scanner.nextInt();
 
-			if (depositChoice.compareToIgnoreCase("cashdeposit") == 0) {
+			if (depositChoice == 1) {
 				System.out.println("Enter Amount to be deposited: ");
 				double depositAmt = scanner.nextDouble();
 				account.setAccountBalance(depositAmt + account.getAccountBalance());
-			} else if (depositChoice.compareToIgnoreCase("chequedeposit") == 0) {
+			} else if (depositChoice == 2) {
 				System.out.println("Cheque Deposit is chargeable by 0.3%: ");
 
 				System.out.println("Enter Amount to be deposited:");
@@ -239,7 +227,7 @@ public class CustomerAccountConfiguration {
 			savingsMaxAccount = (SavingsMaxAccount) account.getProduct();
 			System.out.println("Enter Amount to be withdrawn: ");
 			double withdrawAmt = scanner.nextDouble();
-			if (withdrawAmt < (account.getAccountBalance() - 1000)) {
+			if (withdrawAmt < (account.getAccountBalance() - savingsMaxAccount.getMinBalance())) {
 				account.setAccountBalance(account.getAccountBalance() - withdrawAmt);
 			} else {
 				System.out.println("₹1000 should be kept as minimum");

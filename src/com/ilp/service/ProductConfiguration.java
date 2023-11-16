@@ -22,14 +22,14 @@ public class ProductConfiguration {
 			System.out.println("3.Loan Account");
 			System.out.println("Enter you choice:");
 			
-			int choice = scanner.nextInt();
-			if(choice == 1) {
+			int choiceProduct = scanner.nextInt();
+			if(choiceProduct == 1) {
 				productList.add(createSavingsMaxAccount(serviceList));
 			}
-			else if(choice == 2) {
+			else if(choiceProduct == 2) {
 				productList.add(createCurrentAccount(serviceList));
 			}
-			else if(choice == 3) {
+			else if(choiceProduct == 3) {
 				productList.add(createLoanAccount(serviceList));
 			}
 			System.out.println("Do you want to go back and add more Products?");

@@ -3,13 +3,11 @@ package com.ilp.utility;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.ilp.entity.Account;
 import com.ilp.entity.Customer;
 import com.ilp.entity.Product;
 import com.ilp.entity.Services;
 import com.ilp.service.CustomerAccountConfiguration;
 import com.ilp.service.ProductConfiguration;
-//import com.ilp.service.ServicesService;
 
 public class CustomerUtility {
 
@@ -21,7 +19,8 @@ public class CustomerUtility {
 
 		char goToMainMenu;
 		do {
-			System.out.println("1. Create Account 2.Display Accounts 3.Transaction Bills 4.Create service 5.Create Product 6.Manage Accounts 7.Exit");
+			System.out.println(
+					"1. Create Account 2.Display Accounts 3.Transaction Bills 4.Create service 5.Create Product 6.Manage Accounts 7.Exit");
 			int mainMenuChoice = scanner.nextInt();
 			switch (mainMenuChoice) {
 			case 1:
