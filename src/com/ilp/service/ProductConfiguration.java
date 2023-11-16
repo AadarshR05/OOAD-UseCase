@@ -42,7 +42,7 @@ public class ProductConfiguration {
 		Scanner scanner = new Scanner(System.in);
 		int serviceChoice;
 		char addMoreService;
-		ArrayList<Services> servicesList2 = new ArrayList<Services>();
+		ArrayList<Services> addedServicesList = new ArrayList<Services>();
 		do {
 			int index = 1;
 			System.out.println("Choose the Services to be added");
@@ -52,20 +52,20 @@ public class ProductConfiguration {
 			}
 			serviceChoice = scanner.nextInt();
 			if(serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("cashdeposit")==0||serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("atmwithdrawal")==0||serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("onlinebanking")==0)
-			servicesList2.add(serviceList.get(serviceChoice - 1));
+				addedServicesList.add(serviceList.get(serviceChoice - 1));
 			else
 				System.out.println("This account cannot have this service");
 			System.out.println("Do you want to choose more services?(y/n) : -");
 			
 			addMoreService = scanner.next().charAt(0);
 		} while (addMoreService == 'y');
-		return new SavingsMaxAccount("P101","SavingsMaxAccount",servicesList2,1000);
+		return new SavingsMaxAccount("P101","SavingsMaxAccount",addedServicesList,1000);
 	}
 	public static CurrentAccount createCurrentAccount(ArrayList<Services> serviceList) {
 		Scanner scanner = new Scanner(System.in);
 		int serviceChoice;
 		char addMoreService;
-		ArrayList<Services> servicesList2 = new ArrayList<Services>();
+		ArrayList<Services> addedServicesList = new ArrayList<Services>();
 		do {
 			int index = 1;
 			System.out.println("Choose the Services to be added");
@@ -75,19 +75,19 @@ public class ProductConfiguration {
 			}
 			serviceChoice = scanner.nextInt();
 			if(serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("cashdeposit")==0||serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("atmwithdrawal")==0||serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("onlinebanking")==0||serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("mobilebanking")==0)
-			servicesList2.add(serviceList.get(serviceChoice - 1));
+				addedServicesList.add(serviceList.get(serviceChoice - 1));
 			else
 				System.out.println("This account cannot have this service");
 			System.out.println("Do you want to choose more services?(y/n) : -");
 			addMoreService = scanner.next().charAt(0);
 		} while (addMoreService == 'y');
-		return new CurrentAccount("P102","CurrentAccount",servicesList2);
+		return new CurrentAccount("P102","CurrentAccount",addedServicesList);
 	}
 	public static LoanAccount createLoanAccount(ArrayList<Services> serviceList) {
 		Scanner scanner = new Scanner(System.in);
 		int serviceChoice;
 		char addMoreService;
-		ArrayList<Services> servicesList2 = new ArrayList<Services>();
+		ArrayList<Services> addedServicesList = new ArrayList<Services>();
 		do {
 			int index = 1;
 			System.out.println("Choose the Services to be added");
@@ -97,13 +97,13 @@ public class ProductConfiguration {
 			}
 			serviceChoice = scanner.nextInt();
 			if(serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("cashdeposit")==0||serviceList.get(serviceChoice - 1).getServiceName().compareToIgnoreCase("chequedeposit")==0)
-			servicesList2.add(serviceList.get(serviceChoice - 1));
+				addedServicesList.add(serviceList.get(serviceChoice - 1));
 			else
 				System.out.println("This account cannot have this service");
 			System.out.println("Do you want to choose more services?(y/n) : -");
 			addMoreService = scanner.next().charAt(0);
 		} while (addMoreService == 'y');
-		return new LoanAccount("P103","LoanAccount",servicesList2,0.3);
+		return new LoanAccount("P103","LoanAccount",addedServicesList,0.3);
 	}
 
 	public static ArrayList<Services> createServices() {

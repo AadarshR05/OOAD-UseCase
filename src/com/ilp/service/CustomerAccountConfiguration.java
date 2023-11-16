@@ -13,15 +13,11 @@ import com.ilp.entity.Services;
 public class CustomerAccountConfiguration {
 
 	public static Customer createCustomer(ArrayList<Product> productList) {
-
 		Scanner scanner = new Scanner(System.in);
 		ArrayList<Account> accountList = new ArrayList<Account>();
-
 		char choice;
 		do {
-
 			accountList.add(createAccount(productList));
-
 			System.out.println("Do you want to create another account? (y/n)");
 			choice = scanner.next().charAt(0);
 		} while (choice == 'y');
@@ -29,18 +25,14 @@ public class CustomerAccountConfiguration {
 		String customerCode = scanner.next();
 		System.out.println("Enter Customer Name");
 		String customerName = scanner.next();
-		int k = 0;
-		int i = 0;
+		int index = 0;
 		for (Account account : accountList) {
 			System.out.println("A " + account.getProduct().getProductName() + " for " + customerName
 					+ " Was created with following services");
-			k = 0;
-			for (Services service : accountList.get(i).getProduct().getServiceList()) {
-
+			for (Services service : accountList.get(index).getProduct().getServiceList()) {
 				System.out.println(service.getServiceName());
-				k++;
 			}
-			i++;
+			index++;
 		}
 		Customer customer = new Customer(customerCode, customerName, accountList);
 
@@ -53,7 +45,8 @@ public class CustomerAccountConfiguration {
 		System.out.println("***************************************************************************");
 		int currentPosition = 0;
 		for (Account account : customer.getAccountList()) {
-			System.out.printf(customer.getCustomerCode() + "                      " + customer.getCustomerName() + "                  "
+			System.out.println(customer.getCustomerCode() + "                      " + customer.getCustomerName()
+					+ "                  "
 					+ customer.getAccountList().get(currentPosition).getProduct().getProductName() + "    "
 					+ customer.getAccountList().get(currentPosition).getAccountBalance());
 			currentPosition++;
@@ -72,12 +65,12 @@ public class CustomerAccountConfiguration {
 			index++;
 		}
 		int productChoice = scanner.nextInt();
-		Product product = productList.get(productChoice - 1);
+		Product selectedProduct = productList.get(productChoice - 1);
 		double accountBalance = 0;
 		SavingsMaxAccount savingsAccount = null;
-		if (product instanceof SavingsMaxAccount) {
+		if (selectedProduct instanceof SavingsMaxAccount) {
 			System.out.println("Enter Account Opening Balance: (Min Balance should be above 1000)");
-			savingsAccount = (SavingsMaxAccount) product;
+			savingsAccount = (SavingsMaxAccount) selectedProduct;
 			accountBalance = scanner.nextDouble();
 			while (accountBalance < savingsAccount.getMinBalance()) {
 				System.out.println(
@@ -90,7 +83,7 @@ public class CustomerAccountConfiguration {
 		}
 		System.out.println("Account is Active!!!");
 
-		return new Account(accountNumber, accountBalance, product);
+		return new Account(accountNumber, accountBalance, selectedProduct);
 	}
 
 	public static void transactCustomer(Customer customer) {
@@ -142,7 +135,7 @@ public class CustomerAccountConfiguration {
 						System.out.println("1.Deposit 2.Withdraw 3.Balance");
 						System.out.println("Enter Your Choice: ");
 						int manageAccountChoice = scanner.nextInt();
-						if (manageAccountChoice == 1){
+						if (manageAccountChoice == 1) {
 							depositMoney(customer.getAccountList().get(accountChoice - 1));
 						} else if (manageAccountChoice == 2) {
 							withdrawMoney(customer.getAccountList().get(accountChoice - 1));
